@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- WebContent/META-INF/context.xml -->
+<!-- CONFIGURAÇÃO NECESSÁRIA PARA A EXPECIFICAÇÃO CDI COM A IMPLEMENTAÇÃO WELD SERVLET-->
+<Context>
+	<Resource name="BeanManager"
+	auth="Container"
+	type="jax.enterprise.inject.spi.BeanManager"
+	factory="org.jboss.weld.resources.ManagerObjectFactory"/>
+</Context>

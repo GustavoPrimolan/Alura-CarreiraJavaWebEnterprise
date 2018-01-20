@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:h="http://xmlns.jcp.org/jsf/html"
+		xmlns:f="http://xmlns.jcp.org/jsf/core"
+		xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<ui:composition template="_template.xhtml">
+	<!-- DEFINE O CABEÇALHO DE ACORDO COM O TEMPLATE -->
+		
+		<!-- AS NOVAS PROPRIEDADES ABAIXO VIERAM COM O JSF 2.2 -->
+		<!-- COM ELAS É POSSÍVEL PASSAR PARÂMETROS PELA URL -->
+		<f:metadata>	
+			<f:viewParam name="autorId" value="#{autorBean.autorId}"/>
+			<f:viewAction action="#{autorBean.carregarAutorPelaId}" if="#{param.autorId != null}"/>
+		</f:metadata>
+		<!-- FIM META DADOS -->
+			
+		<ui:define name="titulo">
+			Novo Autor
+		</ui:define>
+		<ui:define name="conteudo">	
+		
+			
+				<!-- <h1>Novo livro</h1> -->
+				<!-- DEFINE O CONTEUDO DE ACORDO COM O TEMPLATE -->
+				
+				<!-- <h1>Dados do Autor</h1> -->
+				<h:form>
+					<fieldset>
+						<legend>Dados do Autor</legend>
+						<h:panelGrid columns="3">
+							<h:outputLabel value="Nome:" for="nome"/>
+							<h:inputText id="nome" value="#{autorBean.autor.nome}" required="true" validateMessage="Autor com menos de 5 caracteres não é permitido">
+								<f:validateLength minimum="5"/>
+							</h:inputText>
+							<h:message for="nome" id="messageNome"/>
+							
+							<h:outputLabel value="Email:" for="email"/>
+							<h:inputText id="email" value="#{autorBean.autor.email}" required="true">
+								<!-- A TAG ABAIXO VEIO COMO O JSF 2.2 E POSSIBILITA COLOCAR UM ATRIBUTO
+								E SEU VALOR NA TAG -->
+								<f:passThroughAttribute name="type" value="email"/>
+							</h:inputText>
+							<h:message for="email" id="messageEmail"/>
+							
+							<h:commandButton value="Gravar" action="#{autorBean.gravar}"/>
+						</h:panelGrid>
+					</fieldset>
+				</h:form>
+				
+				<!-- TABELA DE AUTORES -->
+				<h:form id="formTabelaAutores">
+					<h:dataTable id="tabelaAutores" value="#{autorBean.autores}" var="autor">
+						<h:column>
+							<f:facet name="header">ID</f:facet>
+							<h:outputText value="#{autor.id}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">Nome</f:facet>
+							<h:outputText value="#{autor.nome}" />									
+						</h:column>
+						<h:column>
+							<f:facet name="header">Email</f:facet>
+							<h:outputText value="#{autor.email}"/>
+						</h:column>
+						<h:column>
+							<f:facet name="header">Alterar</f:facet>
+							<h:commandLink value="Alterar" action="#{autorBean.carregar(autor)}"/>
+						</h:column>
+						<h:column>
+							<f:facet name="header">Remover</f:facet>
+							<h:commandLink value="X" action="#{autorBean.remove(autor)}"/>
+						</h:column>
+					</h:dataTable>
+				</h:form>
+				
+				
+		</ui:define>
+		
+		<ui:define name="texto">
+			Cadastro de Autores
+		</ui:define>
+	</ui:composition>
+	
+
+</html>
